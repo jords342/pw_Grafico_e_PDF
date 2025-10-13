@@ -1,0 +1,25 @@
+.modo-escuro {
+    background-color: #212529;
+    color: #f8f9fa;
+}
+
+.modo-escuro .card {
+    background-color: #343a40;
+    color: #f8f9fa;
+    border-color: #495057;
+}
+
+.modo-escuro .navbar {
+    background-color: #000 !important;
+}
+
+.modo-escuro .form-control {
+    background-color: #495057;
+    color: #f8f9fa;
+    border-color: #6c757d;
+}
+
+.modo-escuro .form-control:focus {
+    background-color: #495057;
+    color: #f8f9fa;
+}

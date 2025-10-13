@@ -1,0 +1,40 @@
+Ah, entendi! Você quer um bloco de texto único pra cada carro, pra facilitar o copia e cola direto nos campos do formulário. Fechou! Sem problemas.
+
+Aqui estão os textos corridos, prontos para preencher todos os campos do formulário para cada um dos 5 carros. É só copiar o bloco inteiro e ir colando cada parte no seu respectivo campo.
+
+1. Acura NSX (1ª Geração)
+
+Nome: Acura NSX (1ª Geração)
+Descrição: Considerado o "supercarro para o dia a dia", foi desenvolvido com a ajuda do piloto Ayrton Senna. Possui um chassi de alumínio e motor V6 central, oferecendo uma dirigibilidade excepcional e confiabilidade japonesa.
+Data de Fabricação: 1992-05-20
+Preço: 350000
+
+2. Chevrolet Camaro SS (1969)
+
+Nome: Chevrolet Camaro SS (1969)
+Descrição: Um dos mais icônicos muscle cars da história. O modelo SS de 1969 é famoso por seu design agressivo, faróis ocultos e o poderoso motor V8, que o tornou uma lenda nas ruas e nas pistas de arrancada.
+Data de Fabricação: 1969-07-15
+Preço: 280000
+
+3. Volkswagen Fusca (Série Itamar)
+
+Nome: Volkswagen Fusca (Série Itamar)
+Descrição: O carro mais amado do Brasil em sua reedição dos anos 90. Conhecido por sua simplicidade mecânica, robustez e carisma inigualável. Um verdadeiro ícone cultural com motor boxer refrigerado a ar.
+Data de Fabricação: 1995-11-10
+Preço: 25000
+
+4. DeLorean DMC-12
+
+Nome: DeLorean DMC-12
+Descrição: Imortalizado pela trilogia "De Volta para o Futuro". Famoso por suas portas asa-de-gaivota e a carroceria de aço inoxidável escovado sem pintura. Um design futurista que captura a imaginação até hoje.
+Data de Fabricação: 1982-03-01
+Preço: 450000
+
+5. Ford Mustang GT (Geração S650)
+
+Nome: Ford Mustang GT (Geração S650)
+Descrição: A mais recente geração do lendário pony car. Combina o design clássico com tecnologia de ponta, incluindo um painel de instrumentos digital e o potente motor Coyote V8 5.0, levando a performance a um novo nível.
+Data de Fabricação: 2024-08-01
+Preço: 550000
+
+Observação: Lembre-se que o campo Foto é um upload, então para esse você precisará selecionar uma imagem do seu computador para cada carro.

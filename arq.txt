@@ -1,0 +1,30 @@
+/controleCarros/
+|-- controladores/
+|   |-- carroControlador.php
+|   |-- usuarioControlador.php
+|   |-- graficoControlador.php
+|-- modelos/
+|   |-- Carro.php
+|   |-- Usuario.php
+|-- visoes/
+|   |-- carros/
+|   |   |-- formulario.php
+|   |   |-- index.php
+|   |-- usuarios/
+|   |   |-- cadastro.php
+|   |   |-- login.php
+|   |-- grafico/
+|   |   |-- index.php
+|   |-- templates/
+|       |-- cabecalho.php
+|       |-- rodape.php
+|       |-- navegacao.php
+|-- publico/
+|   |-- css/
+|   |   |-- estilo.css
+|   |-- js/
+|   |   |-- scripts.js
+|   |-- uploads/
+|-- index.php
+|-- configuracao.php
+|-- bdScript.sql
