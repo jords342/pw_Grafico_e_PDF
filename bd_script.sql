@@ -11,6 +11,8 @@ CREATE TABLE tbCarro (
     foto VARCHAR(250) NULL
 );
 
+create a
+
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(250) NOT NULL UNIQUE,
