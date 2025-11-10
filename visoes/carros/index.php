@@ -15,7 +15,27 @@
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title"><?= htmlspecialchars($carro['nome']) ?></h5>
                         <p class="card-text flex-grow-1"><?= htmlspecialchars(substr($carro['descricao'], 0, 100)) . '...' ?></p>
-                        <p class="card-text"><strong>Preço:</strong> R$ <?= number_format($carro['preco'], 2, ',', '.') ?></p>
+                        
+                        <!-- MUDANÇA AQUI: Exibição dos preços e tratamento da Exceção 2 -->
+                        <?php
+                            // Tratamento da Exceção 2: Verifica se o preço é um número válido e maior que zero.
+                            $precoValido = is_numeric($carro['preco']) && $carro['preco'] > 0;
+                            if ($precoValido):
+                                // Calcula o preço em dólar apenas se o preço em real for válido
+                                $precoEmDolar = $carro['preco'] / $cotacaoDolar;
+                        ?>
+                            <p class="card-text">
+                                <strong>Preço (BRL):</strong> R$ <?= number_format($carro['preco'], 2, ',', '.') ?><br>
+                                <strong>Preço (USD):</strong> $ <?= number_format($precoEmDolar, 2, ',', '.') ?>
+                            </p>
+                        <?php else: ?>
+                            <!-- Se o preço for inválido (NULL, 0, texto), exibe uma mensagem de erro controlada -->
+                            <p class="card-text text-danger">
+                                <strong>Preço:</strong> Valor indisponível
+                            </p>
+                        <?php endif; ?>
+                        <!-- Fim da Mudança -->
+
                         <p class="card-text"><small>Fabricado em: <?= $carro['dataFabricacaoBr'] ?></small></p> 
                         <?php if (isset($_SESSION['usuarioId'])): ?>
                             <div class="mt-auto pt-2 border-top d-flex justify-content-center">

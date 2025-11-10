@@ -16,6 +16,12 @@
                 <?php endif; ?>
             </ul>
             <div class="d-flex align-items-center">
+                <!-- MUDANÇA AQUI: Exibição da cotação do dólar -->
+                <span class="navbar-text text-white me-3">
+                    <i class="bi bi-currency-dollar"></i> Dólar Hoje: R$ <?= number_format($cotacaoDolar ?? 5.30, 2, ',', '.') ?>
+                </span>
+                <!-- Fim da Mudança -->
+
                 <div class="form-check form-switch text-white me-3">
                     <input class="form-check-input" type="checkbox" id="interruptorModoEscuro" <?= isset($_COOKIE['tema']) && $_COOKIE['tema'] == 'escuro' ? 'checked' : '' ?>>
                     <label class="form-check-label" for="interruptorModoEscuro">Modo Escuro</label>

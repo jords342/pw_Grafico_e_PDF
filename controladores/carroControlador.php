@@ -2,6 +2,9 @@
 require_once __DIR__ . '/../modelos/Carro.php';
 
 function index() {
+    // A variável $cotacaoDolar agora vem do index.php principal
+    global $cotacaoDolar;
+    
     $carros = listarCarros();
     require __DIR__ . '/../visoes/carros/index.php';
 }

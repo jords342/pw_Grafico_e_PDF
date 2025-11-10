@@ -38,3 +38,6 @@ Data de Fabricação: 2024-08-01
 Preço: 550000
 
 Observação: Lembre-se que o campo Foto é um upload, então para esse você precisará selecionar uma imagem do seu computador para cada carro.
+
+exceção:
+mudar url caro controlador e 
