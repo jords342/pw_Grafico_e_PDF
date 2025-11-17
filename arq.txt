@@ -28,3 +28,122 @@
 |-- index.php
 |-- configuracao.php
 |-- bdScript.sql
+
+Excelente pergunta! Testar o tratamento de exceções é uma parte crucial do desenvolvimento para garantir que seu site seja robusto e não "quebre" de forma inesperada para o usuário final.
+
+Com base no seu código, existem diferentes tipos de "exceções" ou cenários de erro que você pode simular. Vamos ver como testar os principais deles, do mais simples ao mais complexo.
+
+Cenário 1: Falha na Conexão com o Banco de Dados
+
+Seu sistema tem um tratamento para o caso de não conseguir se conectar ao banco de dados. Ele deve exibir uma mensagem de erro e parar a execução.
+
+O que estamos testando? A função criarConexao() no arquivo configuracao.php.
+
+Como simular o erro?
+
+Abra o arquivo configuracao.php.
+
+Altere uma das constantes de conexão para um valor incorreto. O mais fácil é a senha.
+
+code
+PHP
+download
+content_copy
+expand_less
+// Em configuracao.php
+define('DB_HOST', 'localhost');
+define('DB_NOME', 'controleCarro'); 
+define('DB_USUARIO', 'root');
+define('DB_SENHA', 'senha_errada'); // Mude a senha para algo inválido
+
+Qual o resultado esperado?
+Ao tentar acessar qualquer página do site, você deverá ver uma tela em branco com a mensagem de erro que você definiu: "Erro na conexão com o banco de dados: ...", seguido dos detalhes do erro do PDO. Isso mostra que o try-catch está funcionando e impedindo que o site continue com uma conexão inválida.
+
+Como reverter?
+Volte ao arquivo configuracao.php e corrija a constante DB_SENHA para o valor correto (provavelmente uma string vazia '').
+
+Cenário 2: Falha na API de Cotação do Dólar
+
+Sua função obterCotacaoDolar() foi projetada para retornar um valor padrão (fallback) caso a API externa falhe. Isso é ótimo, pois o site continua funcionando mesmo que o serviço de cotação esteja fora do ar.
+
+O que estamos testando? O bloco try-catch dentro da função obterCotacaoDolar() no arquivo utilitarios.php.
+
+Como simular o erro?
+
+Abra o arquivo utilitarios.php.
+
+Altere a URL da API para um endereço inválido.
+
+code
+PHP
+download
+content_copy
+expand_less
+// Em utilitarios.php
+function obterCotacaoDolar() {
+    // Mude a URL para algo que não existe
+    $url = 'https://economia.awesomeapi.com.br/json/last/URL_INVALIDA';
+
+    try {
+        // ... resto do código
+
+Qual o resultado esperado?
+O site deve carregar normalmente, sem nenhuma mensagem de erro visível para o usuário. No entanto, a cotação do dólar exibida na barra de navegação e usada nos cálculos dos preços dos carros será o valor padrão que você definiu no catch: R$ 5,30. Isso prova que a exceção foi capturada e o sistema usou o valor de fallback gracefully.
+
+Como reverter?
+Corrija a URL de volta para 'https://economia.awesomeapi.com.br/json/last/USD-BRL'.
+
+Cenário 3: Tratamento de Dados Inválidos (Preço do Carro)
+
+Na sua visão visoes/carros/index.php, você já tem uma verificação para preços que não são numéricos ou são zero. Você chamou isso de "Exceção 2" nos comentários.
+
+O que estamos testando? A lógica if ($precoValido): ... else: ... endif; na página de listagem de carros.
+
+Como simular o erro?
+
+Acesse seu banco de dados (usando uma ferramenta como phpMyAdmin, DBeaver, etc.).
+
+Vá para a tabela tbCarro.
+
+Escolha um dos carros e edite a coluna preco. Mude o valor para 0, NULL ou até mesmo um texto como "abc".
+
+Qual o resultado esperado?
+Na página principal, o card do carro que você modificou não deve mostrar o preço. Em vez disso, ele deve exibir a mensagem de erro controlada que você programou: "Preço: Valor indisponível", em vermelho. Os outros carros continuarão exibindo seus preços normalmente.
+
+Como reverter?
+Volte ao banco de dados e insira um valor numérico válido (ex: 50000.00) na coluna preco do carro que você alterou.
+
+Cenário 4: Erros de Roteamento (Controlador ou Ação Inexistente)
+
+Seu index.php (Front Controller) verifica se o controlador e a ação solicitados na URL realmente existem.
+
+O que estamos testando? As verificações file_exists() e function_exists() no arquivo index.php.
+
+Como simular o erro?
+
+Controlador Inválido: Acesse a URL: http://localhost/controleCarros/index.php?controlador=produto (use um nome de controlador que não existe).
+
+Ação Inválida: Acesse a URL: http://localhost/controleCarros/index.php?controlador=carro&acao=vender (use uma ação que não existe no carroControlador.php).
+
+Qual o resultado esperado?
+
+Para o controlador inválido, você deve ver a mensagem: "Erro 404 - Página Não Encontrada - O controlador 'produto' não foi encontrado.".
+
+Para a ação inválida, você deve ver: "Erro 404 - Página Não Encontrada - A ação 'vender' não foi encontrada no controlador 'carro'.".
+
+Como reverter?
+Simplesmente navegue para uma URL válida do seu site.
+
+Dica para o Ambiente de Desenvolvimento
+
+Durante o desenvolvimento, é útil ver todos os erros de PHP na tela. Certifique-se de que seu arquivo php.ini esteja configurado para isso:
+
+code
+Ini
+download
+content_copy
+expand_less
+display_errors = On
+error_reporting = E_ALL
+
+Em um ambiente de produção (quando o site estiver no ar), você deve mudar display_errors para Off e registrar os erros em um arquivo de log para não expor informações sensíveis aos usuários.
