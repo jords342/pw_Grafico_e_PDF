@@ -1,10 +1,31 @@
 <?php
 require_once __DIR__ . '/../configuracao.php';
 
-function listarCarros() {
+// ATUALIZAÇÃO: A função agora aceita um parâmetro para ordenação
+function listarCarros($ordenacao = '') {
     $conexao = criarConexao();
-    // 'dataFabricacao_br' alterado para 'dataFabricacaoBr'
-    $sentenca = $conexao->query("SELECT *, DATE_FORMAT(dataFabricacao, '%d/%m/%Y') as dataFabricacaoBr FROM tbCarro");
+    
+    // SQL base
+    $sql = "SELECT *, DATE_FORMAT(dataFabricacao, '%d/%m/%Y') as dataFabricacaoBr FROM tbCarro";
+
+    // Lógica para adicionar a cláusula ORDER BY de forma segura
+    switch ($ordenacao) {
+        case 'preco_asc':
+            $sql .= " ORDER BY preco ASC";
+            break;
+        case 'preco_desc':
+            $sql .= " ORDER BY preco DESC";
+            break;
+        case 'nome_asc':
+            $sql .= " ORDER BY nome ASC";
+            break;
+        default:
+            // Ordenação padrão, se nenhuma for especificada
+            $sql .= " ORDER BY idCarro DESC";
+            break;
+    }
+
+    $sentenca = $conexao->query($sql);
     return $sentenca->fetchAll(PDO::FETCH_ASSOC);
 }
 
@@ -18,7 +39,6 @@ function buscarCarroPorId($id) {
 function salvarCarro($dados, $arquivoFoto) {
     $conexao = criarConexao();
     
-    // 'foto_atual' alterado para 'fotoAtual'
     $nomeFotoFinal = $dados['fotoAtual'] ?? null;
 
     if (isset($arquivoFoto) && $arquivoFoto['error'] == 0) {

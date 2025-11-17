@@ -2,10 +2,17 @@
 require_once __DIR__ . '/../modelos/Carro.php';
 
 function index() {
-    // A variável $cotacaoDolar agora vem do index.php principal
     global $cotacaoDolar;
     
-    $carros = listarCarros();
+    // ATUALIZAÇÃO: Captura o parâmetro de ordenação da URL
+    $ordenacao = $_GET['ordenar'] ?? '';
+    
+    // ATUALIZAÇÃO: Passa a ordenação para a função do modelo
+    $carros = listarCarros($ordenacao);
+
+    // ATUALIZAÇÃO: Envia a ordenação atual para a visão
+    $ordenacaoAtual = $ordenacao;
+    
     require __DIR__ . '/../visoes/carros/index.php';
 }
 
@@ -46,3 +53,4 @@ function excluir() {
     header('Location: index.php');
     exit;
 }
+?>

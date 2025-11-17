@@ -3,6 +3,23 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>Carros Disponíveis</h1>
 </div>
+
+<!-- NOVO: Formulário com o Selectbox para ordenação -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <form action="index.php" method="get" id="form-ordenacao">
+            <input type="hidden" name="controlador" value="carro">
+            <input type="hidden" name="acao" value="index">
+            <select name="ordenar" class="form-select" onchange="document.getElementById('form-ordenacao').submit()">
+                <option value="">Ordenar por Padrão</option>
+                <option value="preco_asc" <?= ($ordenacaoAtual ?? '') == 'preco_asc' ? 'selected' : '' ?>>Preço: Menor para Maior</option>
+                <option value="preco_desc" <?= ($ordenacaoAtual ?? '') == 'preco_desc' ? 'selected' : '' ?>>Preço: Maior para Menor</option>
+                <option value="nome_asc" <?= ($ordenacaoAtual ?? '') == 'nome_asc' ? 'selected' : '' ?>>Nome: A-Z</option>
+            </select>
+        </form>
+    </div>
+</div>
+<!-- FIM DO NOVO CÓDIGO -->
     
 <div class="row">
     <?php if (empty($carros)): ?>
@@ -16,25 +33,23 @@
                         <h5 class="card-title"><?= htmlspecialchars($carro['nome']) ?></h5>
                         <p class="card-text flex-grow-1"><?= htmlspecialchars(substr($carro['descricao'], 0, 100)) . '...' ?></p>
                         
-                        <!-- MUDANÇA AQUI: Exibição dos preços e tratamento da Exceção 2 -->
+                        <!-- Exibição do preço em Reais e Dólares -->
                         <?php
-                            // Tratamento da Exceção 2: Verifica se o preço é um número válido e maior que zero.
                             $precoValido = is_numeric($carro['preco']) && $carro['preco'] > 0;
                             if ($precoValido):
-                                // Calcula o preço em dólar apenas se o preço em real for válido
                                 $precoEmDolar = $carro['preco'] / $cotacaoDolar;
                         ?>
                             <p class="card-text">
                                 <strong>Preço (BRL):</strong> R$ <?= number_format($carro['preco'], 2, ',', '.') ?><br>
+                                <!-- Valor em dólar ao lado do valor em reais -->
                                 <strong>Preço (USD):</strong> $ <?= number_format($precoEmDolar, 2, ',', '.') ?>
                             </p>
                         <?php else: ?>
-                            <!-- Se o preço for inválido (NULL, 0, texto), exibe uma mensagem de erro controlada -->
                             <p class="card-text text-danger">
                                 <strong>Preço:</strong> Valor indisponível
                             </p>
                         <?php endif; ?>
-                        <!-- Fim da Mudança -->
+                        <!-- Fim da Exibição -->
 
                         <p class="card-text"><small>Fabricado em: <?= $carro['dataFabricacaoBr'] ?></small></p> 
                         <?php if (isset($_SESSION['usuarioId'])): ?>
